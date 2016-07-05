@@ -1,0 +1,65 @@
+
+/*********************** tooltipster ********************/
+.tooltipster-custom {
+    border-radius: 5px;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+    color: #2c2c2c;
+    padding: 10px;
+}
+.tooltipster-custom .tooltipster-content {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 6px;
+}
+
+.tooltipster-content button{
+    width: 100%;
+    padding: 5px;
+}
+
+
+
+
+/******************** content  **********************/
+#tooltip {
+    float: right;
+    width: 250px;
+    padding: 0px;
+}
+
+#tooltip p {
+    font-size: 1.5em;
+}
+
+#tooltip #price {
+    color: #ff5454;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding:8px 0;
+}
+
+#tooltip td {
+    height: 5px;
+    text-align: center;
+    border: none;
+    color: #666;
+    margin: 0;
+    padding:4px 0;
+}
+
+#tooltip td:first-child {
+    text-align: center;
+    width: 25%;
+}
+
+#tooltip .continue {
+    width: 190px;
+    margin-top: 5px;
+}
+
+#tooltip table {
+    border: none;
+    margin-bottom: 10px;
+}
