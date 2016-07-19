@@ -1,0 +1,106 @@
+.one_third {
+    width: 30.5%;
+    display: block;
+    float: left;
+    text-align: center;
+    border-radius: 3px;
+    margin: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #ff5454;
+    border-color: #ff5454;
+    box-shadow: inset 0px 1px 0px 0px lightpink;
+    transition: background .4s ease;
+}
+
+.one_third:hover {
+    background: #333;
+    border-color: #333;
+    color: #fff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #999;
+    -moz-box-shadow: inset 0px 1px 0px 0px #999;
+    box-shadow: inset 0px 1px 0px 0px #999;
+}
+
+.one_third a {
+    color: white;
+    display: block;
+    padding: 15px 0px;
+    margin: 5px 15px;
+}
+
+/* Social Add, Del, Acc Form */
+.social_add, .social_del, .social_acc {
+}
+
+.social_add .social_box, .social_del .social_box, .social_acc .social_box {
+    display: block;
+    clear: both;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #F4F4F2;
+    overflow: hidden;
+}
+
+.social_add .icon, .social_del .icon, .social_acc .icon {
+    display: block;
+    width: 10px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    float: left;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+}
+
+.social_add .fb .icon, .social_del .fb .icon, .social_acc .fb .icon {
+    background: #3B5998;
+}
+
+.social_add .google .icon, .social_del .google .icon, .social_acc .google .icon {
+    background: #DD4B39;
+}
+
+.social_add .icon_title, .social_del .icon_title, .social_acc .icon_title {
+    display: block;
+    padding: 5px 0;
+    float: left;
+    font-weight: bold;
+    font-size: 16px;
+    color: #777;
+}
+
+.social_add .social_box:hover, .social_del .social_box:hover, .social_acc .social_box:hover {
+    background: #E4E4E2;
+}
+
+/* Add cat, add man, del cat, del man form */
+.add_cat, .add_man,
+.del_cat, .del_man, .del_cat_confirm, .del_man_confirm,
+.info_acc, .pass_acc {
+    display: none;
+}
+
+.add_cat label, .add_man label,
+.del_cat label, .del_man label,
+.del_cat_confirm label, .del_man_confirm label,
+.info_acc label, .pass_acc label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.add_cat input[type="text"], .add_man input[type="text"],
+.del_cat select, .del_man select,
+.info_acc input, .pass_acc input, .social_acc input{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #DDD;
+    color: #666;
+}
+
+.social_acc input{
+    text-align: center;
+}
+
+

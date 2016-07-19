@@ -8,13 +8,13 @@
     <context-param>
         <description>Location to store uploaded file</description>
         <param-name>file-upload-big</param-name>
-        <param-value>"D:\Dropbox (AUT_PTSM)\CS301_ProjMan\IntroWeb\out\artifacts\ProductShop_war_exploded\images\big"</param-value>
+        <param-value>D:\Dropbox\CS204_AdvancedWebProgramming\ProductShop\out\artifacts\ProductShop_war_exploded\images\big\</param-value>
     </context-param>
 
     <context-param>
         <description>Location to store uploaded file</description>
         <param-name>file-upload-small</param-name>
-        <param-value>"D:\Dropbox (AUT_PTSM)\CS301_ProjMan\IntroWeb\out\artifacts\ProductShop_war_exploded\images\small\"</param-value>
+        <param-value>D:\Dropbox\CS204_AdvancedWebProgramming\ProductShop\out\artifacts\ProductShop_war_exploded\images\small\</param-value>
     </context-param>
 
     <description>MySQL App</description>
