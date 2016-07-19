@@ -1,8 +1,6 @@
 package com.mypackage;
 
-/**
- * Created by Son on 5/27/2015.
- */
+
 public class Manufacturer {
     private int manId;
     private String manName;

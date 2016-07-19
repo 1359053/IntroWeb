@@ -11,9 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Son on 6/6/2015.
- */
+
 public class DetailDao {
     static {
         try {

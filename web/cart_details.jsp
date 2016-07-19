@@ -97,7 +97,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DHS laptop shopping website</title>
+    <title>PTS laptop shopping website</title>
     <link rel="stylesheet" href="css/style.css"/>
     <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="js/jquery.js"></script>
@@ -133,7 +133,7 @@
 <body>
 <header>
     <div class="wrapper">
-        <h1><a href="index.jsp" id="brand" title="DHS design">DHS design</a></h1>
+        <h1><a href="index.jsp" id="brand" title="PTS design">PTS design</a></h1>
         <nav><%= ManufacturerJspGui.toNav(ManufacturerDao.getAll()) %>   <!--generate manufacture links-->
         </nav>
     </div>
@@ -214,13 +214,13 @@
 
 <footer>
     <div class="wrapper">
-        <a href="https://www.facebook.com/groups/1582741855289987/" target="_blank" title="DHS fanpage" class="right"><i
-                class="fa fa-facebook-square"></i> DHS
+        <a href="https://www.facebook.com/groups/1582741855289987/" target="_blank" title="PTS fanpage" class="right"><i
+                class="fa fa-facebook-square"></i> PTS
             Web design</a>
         International Training and Education Center<br/>
-        13BIT2 - Advanced Web Programming Course
+        13BIT - Project Management Course
         <a href="mailto:1359053@itec.hcmus.edu.vn" id='simpletooltip' title="test" data-tipped-options="skin: 'red'"><i
-                class="fa fa-envelope"></i> service@DHS</a>
+                class="fa fa-envelope"></i> service@PTS</a>
     </div>
 </footer>
 </body>

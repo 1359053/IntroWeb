@@ -1,15 +1,8 @@
-<%@ page import="javax.naming.NamingException" %>
-<%@ page import="java.sql.Date" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="preprocess.jsp" %>
 <%
     //access page conditions
     boolean redirect = false;
-    if (!request.getParameterMap().containsKey("sku")) { //url has no sku parameter
-        redirect = true;
-    }
 
     HttpSession session1 = request.getSession(false);
     if (session1 != null && session.getAttribute("loggedUser") != null) {               //logged in
@@ -23,45 +16,6 @@
 
     if (redirect) {
         response.sendRedirect("index.jsp");
-    }
-
-    //get sku from url and get product from database
-    Product p = null;
-    int sku = 0;
-    if (request.getParameterMap().containsKey("sku")) { //url no sku parameter
-        sku = Integer.parseInt(request.getParameter("sku"));
-        try {
-            p = ProductDao.getBySku(sku);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //get previous and next sku
-    int all = ProductDao.getAll().size();
-
-    if (sku > 1) {
-        request.setAttribute("prevProdUp", "<li><a href='update.jsp?sku=" + Integer.toString(sku - 1) + "'><i class='fa fa-arrow-left'></i> Previous product</a></li>");
-    }
-    if (sku < all) {
-        request.setAttribute("nextProdUp", "<li><a href='update.jsp?sku=" + Integer.toString(sku + 1) + "'><i class='fa fa-arrow-right'></i> Next product</a></li>");
-    }
-
-    //display product detail----------------
-    if (p != null) { //if product is in database, set request param so EL can be used
-        request.setAttribute("pIsNull", "false");
-        request.setAttribute("p", p);
-        request.setAttribute("pUnitPrice", String.format("%.1f", p.getUnitPrice()));
-        request.setAttribute("pCatName", (CategoryDao.getById(p.getCatId()) != null) ? CategoryDao.getById(p.getCatId()).getCatName() : "N/A");
-        request.setAttribute("pManName", (ManufacturerDao.getById(p.getManId()) != null) ? ManufacturerDao.getById(p.getManId()).getManName() : "N/A");
-        request.setAttribute("pTotalViews", (ViewTrackingDao.getBySku(sku) != null) ? ViewTrackingDao.getBySku(sku).getTotalViews() : "N/A");
-        request.setAttribute("pImportDateTime", (ImportDao.getBySku(sku) != null) ? new SimpleDateFormat("dd-MM-yyyy").format(new Date(ImportDao.getBySku(sku).getImportDateTime().getTime())) : "N/A");
-        request.setAttribute("pSoldCount", DetailDao.getSoldCount(sku));
-        session.setAttribute("model", p.getName());
-    } else {  //product is not existed in database
-        request.setAttribute("pIsNull", "true");
     }
 %>
 
@@ -107,6 +61,17 @@
                 setInterval(intervalFunc, 1);
             });
             $('#upload-click').on('click', function () {
+                $.ajax({
+                    url: 'ServletAddProd',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        sessionName: 'model',
+                        sessionValue: $('#update_model').val().trim()
+                    },
+                    success: function (data) {
+                    }
+                });
                 $('#picture_submit').click();
                 $('#upload_status').html('Please wait... <i class="fa fa-cog fa-lg fa-spin"></i>');
                 setTimeout(function () {
@@ -124,6 +89,17 @@
                 setInterval(intervalFunc_big, 1);
             });
             $('#upload-click-big').on('click', function () {
+                $.ajax({
+                    url: 'ServletAddProd',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        sessionName: 'model',
+                        sessionValue: $('#update_model').val().trim()
+                    },
+                    success: function (data) {
+                    }
+                });
                 $('#picture_submit-big').click();
                 $('#upload_status-big').html('Please wait... <i class="fa fa-cog fa-lg fa-spin"></i>');
                 setTimeout(function () {
@@ -132,15 +108,10 @@
                     $('#upload_status-big').html(upload_status);
                 }, 3000)
             });
-
-            $('#update_category').val('${p.catId}');
-            $('#update_manufacturer').val('${p.manId}');
         });
 
         $(document).ready(function () {
             $('button.continue').click(function () {
-                var update_sku = "";
-                update_sku = ${param.sku};
                 var update_model = $('#update_model').val().trim();
                 var update_price = $('#update_price').val().trim();
                 var update_category = $('#update_category').val();
@@ -151,7 +122,7 @@
                 var update_hdd = $('#update_hdd').val().trim();
                 var update_picture = update_model + "." + $('#update_picture').val().trim().replace('C:\\fakepath\\', '').split('.').pop();
                 if ($('#update_picture').val().trim() == "") {
-                    update_picture = "${p.picture}";
+                    update_picture = "";
                 }
                 //alert(update_sku + '\n' + update_model + '\n' + update_price + '\n' + update_category + '\n' + update_manufacturer + '\n' + update_processor + '\n' + update_ram + '\n' + update_screen + '\n' + update_hdd + '\n' + update_picture);
                 noty({
@@ -166,11 +137,10 @@
                 });
                 setTimeout(function () {
                     $.ajax({
-                        url: 'ServletUpdateProd',
+                        url: 'ServletAddProd',
                         type: 'post',
                         dataType: 'json',
                         data: {
-                            update_sku: update_sku,
                             update_model: update_model,
                             update_price: update_price,
                             update_category: update_category,
@@ -182,8 +152,9 @@
                             update_picture: update_picture
                         },
                         success: function (data) {
+                            var sku = parseInt(data);
                             //alert('ok');
-                            if (data == true) {
+                            if (sku > 0) {
                                 noty({
                                     dismissQueue: 'true',
                                     force: 'true',
@@ -192,12 +163,12 @@
                                     timeout: 10000,
                                     closeWith: ['click'],
                                     maxVisible: 1,
-                                    text: '<i class="fa fa-check"></i>&nbsp;&nbsp; Product is updated successfully!',
+                                    text: '<i class="fa fa-check"></i>&nbsp;&nbsp; Product is created successfully!',
                                     type: 'success'
                                 });
                                 setTimeout(function () {
-                                    location.reload();
-                                },2000);
+                                    window.location.href = "update.jsp?sku=" + sku;
+                                }, 2500);
                             } else {
                                 noty({
                                     dismissQueue: 'true',
@@ -207,7 +178,7 @@
                                     timeout: 10000,
                                     closeWith: ['click'],
                                     maxVisible: 1,
-                                    text: '<i class="fa fa-times"></i>&nbsp;&nbsp; Update failed!',
+                                    text: '<i class="fa fa-times"></i>&nbsp;&nbsp; Creating failed!',
                                     type: 'error'
                                 });
                             }
@@ -246,13 +217,13 @@
 </div>
 
 <article id="update">
-    <div id="breadcrumb">Product Update</div>
+    <div id="breadcrumb">Create New Product</div>
     <div id="description">
-        <input name="update_sku" value="${p.sku}" hidden/>
+        <input name="update_sku" value="" hidden/>
 
-        <p><label>Model</label><input type="text" name="update_model" id="update_model" value="${p.name}"/></p>
+        <p><label>Model</label><input type="text" name="update_model" id="update_model" value=""/></p>
 
-        <p><label>Price (VND)</label><input type="text" name="update_price" id="update_price" value="${pUnitPrice}"/>
+        <p><label>Price (VND)</label><input type="text" name="update_price" id="update_price" value=""/>
         </p>
 
         <p>
@@ -270,14 +241,14 @@
         </p>
 
         <p><label>Processor</label><input type="text" name="update_processor" id="update_processor"
-                                          value="${p.processor}"/></p>
+                                          value=""/></p>
 
-        <p><label>RAM (GB)</label><input type="text" name="update_ram" id="update_ram" value="${p.ram}"/></p>
+        <p><label>RAM (GB)</label><input type="text" name="update_ram" id="update_ram" value=""/></p>
 
         <p><label>Screen (inches)</label><input type="text" name="update_screen" id="update_screen"
-                                                value="${p.screen}"/></p>
+                                                value=""/></p>
 
-        <p><label>HDD (GB)</label><input type="text" name="update_hdd" id="update_hdd" value="${p.hdd}"/></p>
+        <p><label>HDD (GB)</label><input type="text" name="update_hdd" id="update_hdd" value=""/></p>
 
         <!---------------------------------------------------------------->
         <p><label>Small picture</label><input type="text" id="file-name" placeholder="No file chosen" disabled/></p>
@@ -318,16 +289,14 @@
         </form>
         <!---------------------------------------------------------------->
 
-        <button class='continue'><i class='fa fa-pencil'></i> Update</button>
+        <button class='continue'><i class='fa fa-pencil'></i> Create</button>
 
         <div id="tabs">
             <ul>
-                ${prevProdUp}
-                ${nextProdUp}
             </ul>
         </div>
     </div>
-    <div id="images"><img src='images/big/${p.picture}'></div>
+    <div id="images"><img src='images/big/' title="Big image of product"></div>
 </article>
 
 <footer>

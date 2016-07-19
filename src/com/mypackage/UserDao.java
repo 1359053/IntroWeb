@@ -8,9 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Son on 5/29/2015.
- */
+
 public class UserDao {
     static {
         try {
