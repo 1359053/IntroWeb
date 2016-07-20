@@ -219,7 +219,7 @@
 
 <footer>
     <div class="wrapper">
-        <a href="https://www.facebook.com/groups/1582741855289987/" target="_blank" title="PTS fanpage" class="right"><i
+        <a href="https://www.facebook.com/groups/1679986465600214/" target="_blank" title="PTS fanpage" class="right"><i
                 class="fa fa-facebook-square"></i> PTS
             Web design</a>
         International Training and Education Center<br/>
